@@ -84,3 +84,11 @@ module "alb" {
   vpc_id                = module.vpc.vpc_id
   certificate_arn       = module.acm.certificate_arn
 }
+
+# create ecs role module
+module "ecs" {
+  source                   = "git@github.com:Hirodari/rentzone-terraform-modules-ecs.git//iam-role"
+  project_name             = local.project
+  environment              = local.environment
+  env_file_bucket_name_arn = module.s3.env_file_bucket_name_arn
+}
