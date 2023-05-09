@@ -28,3 +28,7 @@ variable "env_filename" {}
 # acm variables
 variable "domain_name" {}
 variable "subject_alternative_names" {}
+
+# ecs variables 
+variable "cpu_architecture" {}
+variable "container_image" {}

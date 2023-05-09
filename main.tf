@@ -86,9 +86,27 @@ module "alb" {
 }
 
 # create ecs role module
-module "ecs" {
+module "ecs-role" {
   source                   = "git@github.com:Hirodari/rentzone-terraform-modules-ecs.git//iam-role"
   project_name             = local.project
   environment              = local.environment
   env_file_bucket_name_arn = module.s3.env_file_bucket_name_arn
+}
+
+# create ecs service module
+module "ecs" {
+  source                       = "git@github.com:Hirodari/rentzone-terraform-modules-ecs.git//ecs"
+  project_name                 = local.project
+  environment                  = local.environment
+  region                       = local.region
+  env_file_bucket_name_arn     = module.s3.env_file_bucket_name_arn
+  ecs_task_execution_role_arn  = module.ecs-role.ecs_task_execution_role_arn
+  cpu_architecture             = var.cpu_architecture
+  container_image              = var.container_image
+  env_filename                 = module.s3.env_filename
+  private_app_subnet_az1_id    = module.vpc.private_app_subnet_az1_id
+  private_app_subnet_az2_id    = module.vpc.private_app_subnet_az2_id
+  app_server_security_group_id = module.security-groups.app_server_security_group_id
+  alb_target_group_arn         = module.alb.alb_target_group_arn
+
 }
