@@ -110,3 +110,11 @@ module "ecs" {
   alb_target_group_arn         = module.alb.alb_target_group_arn
 
 }
+
+# create asg for ecs module
+module "asg-ecs" {
+  source       = "git@github.com:Hirodari/rentzone-terraform-modules-ecs.git//asg-ecs"
+  project_name = local.project
+  environment  = local.environment
+  ecs_service  = module.ecs.ecs_service
+}
