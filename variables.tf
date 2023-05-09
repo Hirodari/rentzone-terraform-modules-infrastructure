@@ -32,3 +32,6 @@ variable "subject_alternative_names" {}
 # ecs variables 
 variable "cpu_architecture" {}
 variable "container_image" {}
+
+# route-53 variables
+variable "record_name" {}

@@ -118,3 +118,17 @@ module "asg-ecs" {
   environment  = local.environment
   ecs_service  = module.ecs.ecs_service
 }
+
+# create route-53 module
+module "route-53" {
+  source                             = "git@github.com:Hirodari/rentzone-terraform-modules-ecs.git//route-53"
+  domain_name                        = var.domain_name
+  record_name                        = var.record_name
+  application_load_balancer_dns_name = module.alb.application_load_balancer_dns_name
+  application_load_balancer_zone_id  = module.alb.application_load_balancer_zone_id
+}
+
+# output for the web link
+output "web_url" {
+  value = join("", ["https://", var.record_name, ".", var.domain_name])
+}
