@@ -57,3 +57,18 @@ module "rds" {
   multi_az_deployment        = var.multi_az_deployment
   database_security_group_id = module.security-groups.database_security_group_id
 }
+
+# create s3 bucket/file to upload module
+module "s3" {
+  source          = "git@github.com:Hirodari/rentzone-terraform-modules-ecs.git//s3"
+  project_name    = local.project
+  env_bucket_name = var.env_bucket_name
+  env_filename    = var.env_filename
+}
+
+# create acm module to create certificate for inflight encryption
+module "acm" {
+  source                    = "git@github.com:Hirodari/rentzone-terraform-modules-ecs.git//acm"
+  domain_name               = var.domain_name
+  subject_alternative_names = var.subject_alternative_names
+}

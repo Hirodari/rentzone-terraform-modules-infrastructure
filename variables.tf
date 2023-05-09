@@ -20,3 +20,11 @@ variable "db_snapshot_identifier" {}
 variable "db_instance_class" {}
 variable "db_instance_identifier" {}
 variable "multi_az_deployment" {}
+
+# s3 variables
+variable "env_bucket_name" {}
+variable "env_filename" {}
+
+# acm variables
+variable "domain_name" {}
+variable "subject_alternative_names" {}
